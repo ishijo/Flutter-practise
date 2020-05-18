@@ -22,14 +22,31 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   
-  String mytext="Hello world";
+//  void _something(){
+//
+//  }
   
-  void _changeText(){
+  
+  bool pressAttention= false;
+  String mytext="Vampire";
+  
+  void changeTextnColor(){
     setState(() {
-      if(mytext.startsWith('H')){
-        mytext="this";
-      }else{
-        mytext="Hello World";
+//      if(mytext=='Vampire'){
+//        if(pressAttention=false){
+//          pressAttention=true;
+//          mytext="Wolf";
+//        }
+//      }else{
+//        mytext="Vampire";
+//        pressAttention=false;
+//      }
+      if (pressAttention == false) {
+        pressAttention = true;
+        mytext = "Wolf";
+      } else {
+        pressAttention = false;
+        mytext = "Vampire";
       }
     });
   }
@@ -37,14 +54,30 @@ class _HomePageState extends State<HomePage> {
   
   Widget _bodyWidget(){
     return new Container(
-        padding: const EdgeInsets.all(8.0),
+      color: pressAttention?Colors.blueGrey:Colors.brown,
+        padding: const EdgeInsets.all(4.0),
         child: new Center(
             child: new Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                new Text(mytext),
-                new RaisedButton(
-                  child: new Text("Random"),
-                  onPressed: _changeText,
+                new ButtonTheme(
+                  minWidth: 200.0,
+                  height: 100.0,
+                  child: new RaisedButton(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20.0),
+                        side: BorderSide(
+                            width: 1,
+                            color: pressAttention?Colors.indigo:Colors.black
+                        )
+                    ),
+                    child: new Text(mytext, style: new TextStyle(
+                        color: Colors.white,
+                      fontSize: 30.0
+                    ),),
+                    color: pressAttention?Colors.amber:Colors.red,
+                    onPressed: changeTextnColor,
+                  )
                 )
               ],
             )
@@ -59,8 +92,14 @@ class _HomePageState extends State<HomePage> {
     return new Scaffold(
       appBar: new AppBar(
         title: new Text("Blah blleh"),
+        backgroundColor: pressAttention?Colors.lightGreenAccent:Colors.pink,
       ),
-      body: _bodyWidget()
+      body: _bodyWidget(),
+      floatingActionButton: new FloatingActionButton(
+        onPressed: null,
+        backgroundColor: Colors.deepPurple,
+        child: new Icon(Icons.add, color: Colors.white,),
+      ),
     );
   }
 }
